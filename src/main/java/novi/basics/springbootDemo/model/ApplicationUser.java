@@ -3,11 +3,13 @@ package novi.basics.springbootDemo.model;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JoinColumnOrFormula;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
-
+@EnableConfigurationProperties
 // Hier worden de handyman en de customer in 1 class (dus 1 tabel) gestopt.
 @Entity
 @Table(name = "ApplicationUser")
@@ -47,30 +49,30 @@ public class ApplicationUser {
 
     private String passWord;
 
-    @ManyToMany //: gebruiker kan meerdere rollen hebben en rollen kunnen meerdere gebruikers hebben
-    @JoinTable(name = "ApplicationUserRole", //= koppel tabel
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "roleId"))
-    private Set<Role> roles;
+
     public ApplicationUser(){ //elke klasse moet een lege constructor hebben. waarom??
 
     }
 
-    @OneToMany // Meerdere reserveringen aan 1 klant koppelen. Customer heeft 1 of meerdere reserveringen. reservering heeft alleen 1 klant
+    @ManyToMany (fetch = FetchType.EAGER) //: gebruiker kan meerdere rollen hebben en rollen kunnen meerdere gebruikers hebben
+    private Set<Role> roleId;
+
+    @OneToMany (fetch = FetchType.EAGER, mappedBy = "customer") // Meerdere reserveringen aan 1 klant koppelen. Customer heeft 1 of meerdere reserveringen. reservering heeft alleen 1 klant
     @JoinTable(name="Reservation",
     joinColumns = @JoinColumn (name= "reservationNr"),
     inverseForeignKey = @JoinColumn (name="userId")) //Primary Key? moet die hier in het koppeltabel?
-    private Set<Reservation> reservations;
+    private List<Reservation> reservations;
 
-    @JoinColumns({ //alle handyman weergeven
-    @Fetch(fetch = FetchType.LAZY),
+    @JoinColumns (fetch = FetchType.EAGER), ({ //alle handyman weergeven
+
     @JoinColumn(name="postalCode", referencedColumnName="postalCode"),
     @JoinColumn(name="regioProvincie", referencedColumnName="regioProvincie"),
     @JoinColumn(name="handyman", referencedColumnName = "role"))
-    private Set<Handyman> handymen;
+    private List<Handyman> handymen;
 
-    commit?
     }
+
+
 
 
 

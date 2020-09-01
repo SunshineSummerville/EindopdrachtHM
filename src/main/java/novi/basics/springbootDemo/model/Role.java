@@ -1,14 +1,34 @@
 package novi.basics.springbootDemo.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.awt.*;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 public class Role {
 
 
+    @Id
+    private long roleId;
+    @Column(nullable = false)
     private String handyman; // dienstverlener
+    @Column(nullable = false)
     private String customer; // algemene webgebruiker
+    @Column(nullable = false)
     private String admin; // apllicatie beheerder
+
+    // Lege constructor
+    public Role(){
+
+    }
+
+
+    @ManyToMany (fetch = FetchType.EAGER, mappedBy = "roles")
+    private Set<ApplicationUser> applicationUsers; //<> many to many moet met een container in de vorm van set, list,colletion etc..
+
+
+
 
 
 //    @Id

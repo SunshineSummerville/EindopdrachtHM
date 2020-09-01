@@ -1,20 +1,44 @@
 package novi.basics.springbootDemo.model;
 
-import javax.persistence.Entity;
+import org.hibernate.annotations.Fetch;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Reservation {
 
-    private string reservationNr;
-//Make reservation
-// reservation id = primary key
+    @Id
+    @Column(columnDefinition = "serial")
+    private long reservationNr; // reservationNr = primary key
+    @Column(nullable = false)
+    private String reservationDate;
+
+
 //service category
 //Customer id
 //Handymand  id
 
-    public Reservation(reservationNr, customer) {
-        this.reservationNr = reservationNr;
+    public Reservation(){ // lege constructor
 
     }
+
+
+    //Make reservation
+    public Reservation() {
+        this.reservationNr = reservationNr;
+        this.reservationDate = reservationDate;
+        this.customer = customer;
+
+
+    }
+
+    @ManyToOne (fetch = FetchType.EAGER)
+    private ApplicationUser customer; //foreignkey
+
+    @ManyToMany (fetch = FetchType.EAGER, mappedBy = "reservationNr")
+    private List<ServiceCategory> serviceCategories;
+
+
 
 }
