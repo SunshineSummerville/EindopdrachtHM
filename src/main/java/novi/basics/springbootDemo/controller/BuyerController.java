@@ -39,7 +39,7 @@ public class BuyerController {
 
         if(buyer.isPresent()) {
             buyerRepository.deleteById(id);
-            return "User met id " + buyer.get().getBuyerId() + " is verwijderd";
+            return "User met id " + buyer.get().getUserId() + " is verwijderd";
         }
         return "user is niet gevonden";
 
@@ -49,14 +49,14 @@ public class BuyerController {
     public Customer updateUserById(@PathVariable long id, @RequestBody Customer updatedUser) {
         return buyerRepository.findById(id).map(
                 user -> {
-                    user.setFirstname(updatedUser.getFirstname());
-                    user.setLastname(updatedUser.getLastname());
+                    user.setFirstName(updatedUser.getFirstName());
+                    user.setLastName(updatedUser.getLastName());
                     user.setEmail(updatedUser.getEmail());
                     return buyerRepository.save(user);
                 })
                 // Kan de user niet vinden in database
                 .orElseGet(() -> {
-                    updatedUser.setBuyerId(id);
+                    updatedUser.setUserId(id);
                     return buyerRepository.save(updatedUser);
                 });
     }
