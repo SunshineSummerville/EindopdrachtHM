@@ -50,7 +50,7 @@ public class ApplicationUser {
     private String passWord;
 
 
-    public ApplicationUser(){ //elke klasse moet een lege constructor hebben. waarom??
+    public ApplicationUser(){ //elke klasse moet een lege constructor hebben. waarom?? <-- Springboot entity magic
 
     }
 
@@ -60,17 +60,18 @@ public class ApplicationUser {
     @OneToMany (fetch = FetchType.EAGER, mappedBy = "customer") // Meerdere reserveringen aan 1 klant koppelen. Customer heeft 1 of meerdere reserveringen. reservering heeft alleen 1 klant
     @JoinTable(name="Reservation",
     joinColumns = @JoinColumn (name= "reservationNr"),
-    inverseForeignKey = @JoinColumn (name="userId")) //Primary Key? moet die hier in het koppeltabel?
+    inverseJoinColumns = @JoinColumn (name="userId")) //Primary Key? moet die hier in het koppeltabel?
     private List<Reservation> reservations;
 
-    @JoinColumns (fetch = FetchType.EAGER), ({ //alle handyman weergeven
 
-    @JoinColumn(name="postalCode", referencedColumnName="postalCode"),
-    @JoinColumn(name="regioProvincie", referencedColumnName="regioProvincie"),
-    @JoinColumn(name="handyman", referencedColumnName = "role"))
-    private List<Handyman> handymen;
-
-    }
+//    @JoinColumns (fetch = FetchType.EAGER), ({ //alle handyman weergeven
+//
+//    @JoinColumn(name="postalCode", referencedColumnName="postalCode"),
+//    @JoinColumn(name="regioProvincie", referencedColumnName="regioProvincie"),
+//    @JoinColumn(name="handyman", referencedColumnName = "role"))
+//    private List<Handyman> handymen;
+//
+//    }
 
 
 

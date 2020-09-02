@@ -25,12 +25,10 @@ public class Reservation {
 
 
     //Make reservation
-    public Reservation() {
+    public Reservation(long reservationNr, String reservationDate, ApplicationUser customer) {
         this.reservationNr = reservationNr;
         this.reservationDate = reservationDate;
         this.customer = customer;
-
-
     }
 
     @ManyToOne (fetch = FetchType.EAGER)
