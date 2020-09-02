@@ -24,8 +24,8 @@ public class Role {
     }
 
 
-    @ManyToMany (fetch = FetchType.EAGER, mappedBy = "roles")
-    private Set<ApplicationUser> applicationUsers; //<> many to many moet met een container in de vorm van set, list,colletion etc..
+    //@ManyToMany (fetch = FetchType.EAGER, mappedBy = "roles")
+    //private Set<ApplicationUser> applicationUsers; //<> many to many moet met een container in de vorm van set, list,colletion etc..
 
 
 

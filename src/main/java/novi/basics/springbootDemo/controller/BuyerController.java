@@ -1,6 +1,5 @@
 package novi.basics.springbootDemo.controller;
 
-import novi.basics.springbootDemo.model.Customer;
 import novi.basics.springbootDemo.service.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
