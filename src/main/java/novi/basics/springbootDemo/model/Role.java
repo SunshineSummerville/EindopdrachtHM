@@ -1,51 +1,53 @@
 package novi.basics.springbootDemo.model;
 
-import javax.persistence.*;
-import java.awt.*;
-import java.util.Collection;
-import java.util.Set;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Role {
 
-
     @Id
-    private long roleId;
-    @Column(nullable = false)
-    private String handyman; // dienstverlener
-    @Column(nullable = false)
-    private String customer; // algemene webgebruiker
-    @Column(nullable = false)
-    private String admin; // apllicatie beheerder
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
+    @Column(columnDefinition = "serial")
+    private long id;
 
-    // Lege constructor
-    public Role(){
+    @Enumerated(EnumType.STRING)
+    private ERole name;
 
+    public Role() {
     }
 
+    public Role(ERole name) {
+        this.name = name;
+    }
 
-    //@ManyToMany (fetch = FetchType.EAGER, mappedBy = "roles")
-    //private Set<ApplicationUser> applicationUsers; //<> many to many moet met een container in de vorm van set, list,colletion etc..
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public ERole getName() {
+        return name;
+    }
 
-
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long role_id;
-//
-//    private String name;
-//    @ManyToMany(mappedBy = "roles")
-//    private Collection<User> users;
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "roles_privileges",
-//            joinColumns = @JoinColumn(
-//                    name = "role_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "privilege_id", referencedColumnName = "id"))
-//    private Collection<Privilege> privileges;
-
+    public void setName(ERole name) {
+        this.name = name;
+    }
 }

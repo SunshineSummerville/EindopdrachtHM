@@ -41,53 +41,29 @@ public class ApplicationUser {
     private String houseNumber;
     @Column(nullable = false)
     private String postalCode;
-    private String role;
+    @Column(nullable = false)
     private String regioProvincie;
-    private String location; //location adhv regioProvincie+ postalcode? location is foreinkey in location klasse
-//PK id, role, postalcode?
-    //Hieronder staan de attribut(en) die alleen voor de handyman gelden
 
-    private String passWord;
+    private String password;
+
+    @ManyToMany
+    @JoinTable (name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
 
     public ApplicationUser(){ //elke klasse moet een lege constructor hebben. waarom?? <-- Springboot entity magic
 
     }
 
-    @ManyToMany (fetch = FetchType.EAGER) //: gebruiker kan meerdere rollen hebben en rollen kunnen meerdere gebruikers hebben
-    private Set<Role> roleId;
-
-    @OneToMany (fetch = FetchType.EAGER, mappedBy = "customer") // Meerdere reserveringen aan 1 klant koppelen. Customer heeft 1 of meerdere reserveringen. reservering heeft alleen 1 klant
-    @JoinTable(name="Reservation",
-    joinColumns = @JoinColumn (name= "reservationNr"),
-    inverseJoinColumns = @JoinColumn (name="userId")) //Primary Key? moet die hier in het koppeltabel?
-    private List<Reservation> reservations;
-
-
-//    @JoinColumns (fetch = FetchType.EAGER), ({ //alle handyman weergeven
-//
-//    @JoinColumn(name="postalCode", referencedColumnName="postalCode"),
-//    @JoinColumn(name="regioProvincie", referencedColumnName="regioProvincie"),
-//    @JoinColumn(name="handyman", referencedColumnName = "role"))
-//    private List<Handyman> handymen;
-//
-//    }
-
-
-
-
-
-
-
     public long getUserId() {
         return userId;
     }
 
-    public void setUserId(long buyerId) {
-        this.userId = buyerId;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
-
-
 
     public String getFirstName() {
         return firstName;
@@ -113,21 +89,12 @@ public class ApplicationUser {
         this.email = email;
     }
 
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
     }
 
     public String getStreetName() {
@@ -154,16 +121,28 @@ public class ApplicationUser {
         this.postalCode = postalCode;
     }
 
+    public String getRegioProvincie() {
+        return regioProvincie;
+    }
 
-//
-//    public List<Customer> getBuyers() {
-//        return buyers;
-//    }
-//
-//    public void setBuyers(List<Customer> buyers) {
-//        this.buyers = buyers;
-//    }
+    public void setRegioProvincie(String regioProvincie) {
+        this.regioProvincie = regioProvincie;
+    }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }
 

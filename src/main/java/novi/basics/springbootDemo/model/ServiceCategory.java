@@ -17,9 +17,6 @@ public class ServiceCategory {
 
     }
 
-    @ManyToMany (fetch = FetchType.EAGER)
-    private Reservation reservationNr;
-
 
 
 

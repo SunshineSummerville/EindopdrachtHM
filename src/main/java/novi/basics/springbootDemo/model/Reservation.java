@@ -24,19 +24,6 @@ public class Reservation {
     }
 
 
-    //Make reservation
-    public Reservation(long reservationNr, String reservationDate, ApplicationUser customer) {
-        this.reservationNr = reservationNr;
-        this.reservationDate = reservationDate;
-        this.customer = customer;
-    }
-
-    @ManyToOne (fetch = FetchType.EAGER)
-    private ApplicationUser customer; //foreignkey
-
-    @ManyToMany (fetch = FetchType.EAGER, mappedBy = "reservationNr")
-    private List<ServiceCategory> serviceCategories;
-
 
 
 }
