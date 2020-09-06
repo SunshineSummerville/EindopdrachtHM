@@ -12,7 +12,7 @@ import java.util.Set;
 @EnableConfigurationProperties
 // Hier worden de handyman en de customer in 1 class (dus 1 tabel) gestopt.
 @Entity
-@Table(name = "ApplicationUser")
+
 public class ApplicationUser {
     // Hieronder staan de attributen die voor beide gelden
     // Deze mogen niet leeg zijn, vandaar nullable = false;

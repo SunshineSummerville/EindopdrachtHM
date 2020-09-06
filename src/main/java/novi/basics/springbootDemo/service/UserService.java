@@ -33,4 +33,17 @@ public class UserService {
 
         return handyMen;
     }
+
+
+    public ApplicationUser addAppUser(ApplicationUser newAppUser) {
+        return appUserRepository.save(newAppUser);
+    }
+
+    public List<ApplicationUser> getAllAppUsers() {
+        List<ApplicationUser> allAppUsers = appUserRepository.findAll();
+        return allAppUsers;
+    }
+
+
+
 }
