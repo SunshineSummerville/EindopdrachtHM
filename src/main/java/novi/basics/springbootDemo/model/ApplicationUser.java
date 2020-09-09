@@ -1,8 +1,6 @@
 package novi.basics.springbootDemo.model;
 
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.JoinColumnOrFormula;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import javax.persistence.*;
@@ -45,18 +43,25 @@ public class ApplicationUser {
     private String regioProvincie;
 
     private String password;
-    private List <Reservation> Reservations;
+
+    @OneToMany(mappedBy = "handyman")
+    private List <Reservation> reservations;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Reservation> boughtReservations;
+
+    @ManyToMany
+    @JoinTable (name = "user_servicecategory",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "serviceName"))
+    private List<ServiceCategory> possibleCategories;
+
 
     @ManyToMany
     @JoinTable (name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-
-    public ApplicationUser(){ //elke klasse moet een lege constructor hebben. waarom?? <-- Springboot entity magic
-
-    }
 
     public long getUserId() {
         return userId;
@@ -136,6 +141,22 @@ public class ApplicationUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public List<Reservation> getBoughtReservations() {
+        return boughtReservations;
+    }
+
+    public void setBoughtReservations(List<Reservation> boughtReservations) {
+        this.boughtReservations = boughtReservations;
     }
 
     public Set<Role> getRoles() {

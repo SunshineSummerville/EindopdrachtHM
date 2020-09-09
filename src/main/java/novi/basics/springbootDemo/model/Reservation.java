@@ -3,7 +3,6 @@ package novi.basics.springbootDemo.model;
 import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Reservation {
@@ -13,7 +12,15 @@ public class Reservation {
     private long reservationNr; // reservationNr = primary key
     @Column(nullable = false)
     private String reservationDate;
-    private ServiceCategory ServiceCategory;
+
+    @ManyToOne
+    private ApplicationUser handyman;
+
+    @ManyToOne
+    private ApplicationUser customer;
+
+    @ManyToOne
+    private ServiceCategory serviceCategory;
 
 
 

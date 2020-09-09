@@ -32,7 +32,7 @@ public class UserService {
             }
         }
 
-        return handyMen;
+        return foundUsers;
     }
 
     public List<ApplicationUser> getAllAppUsers() {
