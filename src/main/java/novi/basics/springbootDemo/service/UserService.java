@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -34,15 +35,21 @@ public class UserService {
         return handyMen;
     }
 
+    public List<ApplicationUser> getAllAppUsers() {
+        List<ApplicationUser> allAppUsers = appUserRepository.findAll();
+        return allAppUsers;
+    }
+
+    public Optional<ApplicationUser> getAppUserById(Long userId) {
+        return appUserRepository.findById(userId);
+    }
+
 
     public ApplicationUser addAppUser(ApplicationUser newAppUser) {
         return appUserRepository.save(newAppUser);
     }
 
-    public List<ApplicationUser> getAllAppUsers() {
-        List<ApplicationUser> allAppUsers = appUserRepository.findAll();
-        return allAppUsers;
-    }
+
 
 
 

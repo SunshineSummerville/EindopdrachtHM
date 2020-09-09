@@ -13,6 +13,8 @@ public class Reservation {
     private long reservationNr; // reservationNr = primary key
     @Column(nullable = false)
     private String reservationDate;
+    private ServiceCategory ServiceCategory;
+
 
 
 //service category

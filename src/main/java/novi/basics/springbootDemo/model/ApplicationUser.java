@@ -45,6 +45,7 @@ public class ApplicationUser {
     private String regioProvincie;
 
     private String password;
+    private List <Reservation> Reservations;
 
     @ManyToMany
     @JoinTable (name = "user_role",
