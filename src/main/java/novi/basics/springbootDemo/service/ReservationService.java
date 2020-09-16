@@ -41,26 +41,14 @@ public class ReservationService {
         Optional<Reservation> reservationFromDb = reservationRepository.findById(id);
 
         if(reservationFromDb.isPresent()) { // check of reservering aanwezig is adhv nr
-            if (checkIsValidNr(updatedReservation.getReservationNr())) {
-                Reservation reservation = new Reservation();
-                reservation.setReservationNr(updatedReservation.getReservationNr());
-                reservation.setReservationDate(updatedReservation.getReservationDate());
-                reservation.setCustomer(updatedReservation.getCustomer());
+            Reservation oldReservation = reservationFromDb.get();
+            oldReservation.setReservationDate(updatedReservation.getReservationDate());
+            oldReservation.setCustomer(updatedReservation.getCustomer());
 
-                return reservationRepository.save(reservation);
-            }
+            return reservationRepository.save(oldReservation);
         }
         throw new ReservationNotFoundException(id);
     }
-
-    // methode om bovenstaande check te kunne uitvoeren:
-    private boolean checkIsValidNr(long number) {
-        if(number == 0 ) {
-            return false;
-        }
-        return true;
-    }
-
 
 
 }
