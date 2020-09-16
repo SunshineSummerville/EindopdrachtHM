@@ -1,6 +1,5 @@
 package novi.basics.springbootDemo.model;
 
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 
@@ -21,9 +20,6 @@ public class Reservation {
 
     @ManyToOne
     private ServiceCategory serviceCategory;
-
-
-
 
 
     public Reservation(){ // lege constructor
