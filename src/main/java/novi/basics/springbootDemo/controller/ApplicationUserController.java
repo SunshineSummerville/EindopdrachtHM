@@ -2,6 +2,7 @@ package novi.basics.springbootDemo.controller;
 
 
 import novi.basics.springbootDemo.model.ApplicationUser;
+import novi.basics.springbootDemo.model.Reservation;
 import novi.basics.springbootDemo.repository.AppUserRepository;
 import novi.basics.springbootDemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,18 @@ public class ApplicationUserController {
         return appUserRepository.save(newAppUser);
     }
 
-//    @DeleteMapping (value = "/api/appuser/{id}")
+    @DeleteMapping(value = "/api/user/{id}")
+    public String deleteUser(@PathVariable long id) {
+        return userService.deleteAppUserById (id);
+    }
+
+    @PutMapping(value = "/api/user/{id}")
+    public ApplicationUser updateUserById(@PathVariable long id, @RequestBody ApplicationUser updatedUser) {
+        return userService.updateUserById(id, updatedUser);
+    }
+
+
+    //    @DeleteMapping (value = "/api/appuser/{id}")
 //    public void deleteAppUser (@PathVariable Long id){
 //        Optional<ApplicationUser> appUser = appUserRepository.findById(id);
 //        if(appUser.isPresent()) {
@@ -70,29 +82,37 @@ public class ApplicationUserController {
 //                });
 //    }
 //
-//    @PutMapping("/api/user/{id}/dog") // http://localhost:8080/api/user/1/dog
-//    public ApplicationUser addDogToUser(@PathVariable long id,
-//                                        @RequestBody Dog newDog) {
-//        Optional<ApplicationUser> user =
-//                applicationUserRepository.findById(id);
+    @PutMapping("/api/user/{id}/reservation") // add made reservation: reservation is made by customer which will be assigned to a appuser in the database
+    public ApplicationUser addReservationToappUser(@PathVariable long id, @RequestBody Reservation newReservation) {
+        Optional<ApplicationUser> user = appUserRepository.findById(id);
+
+        if(user.isPresent()) { // check: gebruiker is aanwezig
+            ApplicationUser userFromDb = user.get();
+            List<Reservation> currentReservations = userFromDb.getReservations();
+
+            newReservation.setCustomer (userFromDb); // ??
 //
-//        if(user.isPresent()) {
-//            ApplicationUser userFromDb = user.get();
-//            List<Dog> currentDogs = userFromDb.getDogs();
+//            if(newReservation.get () == null || newReservation.getappUser ().getId() != id) {
 //
-//            if(newDog.getOwner() == null || newDog.getOwner().getId() != id) {
-//                newDog.setOwner(userFromDb);
 //            }
-//
-//            currentDogs.add(newDog);
-//            userFromDb.setDogs(currentDogs);
-//
-//            return applicationUserRepository.save(userFromDb);
-//        }
-//
-//        return null;
-//
-//    }
+
+            currentReservations.add(newReservation);
+            userFromDb.setReservations(currentReservations);
+
+            return appUserRepository.save(userFromDb);
+        }
+
+        return null;
+
+    }
+
+    @PostMapping("/api/user/fill")
+    public ApplicationUser addTestUsers() {
+        return userService.addTestUserWithReservations();
+    }
+
+
+
 
 
 

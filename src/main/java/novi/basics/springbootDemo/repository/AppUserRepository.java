@@ -8,5 +8,7 @@ import java.util.List;
 public interface AppUserRepository extends JpaRepository<ApplicationUser, Long> {
 
     List<ApplicationUser> findByPostalCode(String postalcode);
+    String deleteUser(Long id);
+
 
 }

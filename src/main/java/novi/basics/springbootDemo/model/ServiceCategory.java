@@ -4,13 +4,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "ServiceCategory")
 public class ServiceCategory {
 
     @Id
     private String serviceName;// = Primary Key
     @Column(nullable = false)
-    private String price;
+    private String price; // start tarief - optioneel
     @Column(nullable = false)
     private String ServiceDescription;
 

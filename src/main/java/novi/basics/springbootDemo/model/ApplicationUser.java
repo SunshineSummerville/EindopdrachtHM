@@ -50,18 +50,21 @@ public class ApplicationUser {
     @OneToMany(mappedBy = "customer")
     private List<Reservation> boughtReservations;
 
+//    @ManyToMany
+//    @JoinTable (name = "appUser_servicecategory",
+//            joinColumns = @JoinColumn(name = "userId"),
+//            inverseJoinColumns = @JoinColumn(name = "serviceName"))
+//    private List<ServiceCategory> possibleCategories;
+//
+//
     @ManyToMany
-    @JoinTable (name = "user_servicecategory",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "serviceName"))
-    private List<ServiceCategory> possibleCategories;
-
-
-    @ManyToMany
-    @JoinTable (name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
+    @JoinTable (name = "appUser_role",
+            joinColumns = @JoinColumn(name = "user_Id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    public ApplicationUser() {
+    }
 
     public long getUserId() {
         return userId;
