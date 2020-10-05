@@ -1,6 +1,8 @@
 package novi.basics.springbootDemo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,7 @@ public class Reservation {
     private ApplicationUser handyman;
 
     @ManyToOne
+    @JsonIgnoreProperties // om te voorkomen dat dat er oneindige loop van users worden aangemaakt. De bidirectionele relatie zorgt ervoor dat we de "applcicationuser" kunnen opvragen en de "reservation" automatisch meekomt. De reservering  heeft ook applicationusers en die komt ook automatisch mee.
     private ApplicationUser customer;
 
     @ManyToOne

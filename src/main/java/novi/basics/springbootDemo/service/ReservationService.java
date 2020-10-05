@@ -1,16 +1,16 @@
 package novi.basics.springbootDemo.service;
 
 import novi.basics.springbootDemo.exception.ReservationNotFoundException;
-import novi.basics.springbootDemo.exception.UserNotFoundException;
-import novi.basics.springbootDemo.model.ApplicationUser;
 import novi.basics.springbootDemo.model.Reservation;
 import novi.basics.springbootDemo.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ReservationService {
+@Service //waar is dit voor??
+public class ReservationService implements IReservationService {
 
     @Autowired
     public ReservationRepository reservationRepository;
@@ -20,14 +20,17 @@ public class ReservationService {
         return allReservations;
     }
 
+    @Override
     public Optional<Reservation> getReservationByNr (Long reservationNr) {
         return reservationRepository.findById(reservationNr);
     }
 
+    @Override
     public Reservation addResevation (Reservation newResevation) {
         return reservationRepository.save(newResevation);
     }
 
+    @Override
     public String deleteReservationByNr (Long reservatonNr) {
         Optional<Reservation> reservation = reservationRepository.findById(reservatonNr);
         if (reservation.isPresent()) {
@@ -37,6 +40,7 @@ public class ReservationService {
         throw new ReservationNotFoundException( "Reservering bestaat niet.");
     }
 
+    @Override
     public Reservation updateReservationByNr(Long id, Reservation updatedReservation) {
         Optional<Reservation> reservationFromDb = reservationRepository.findById(id);
 

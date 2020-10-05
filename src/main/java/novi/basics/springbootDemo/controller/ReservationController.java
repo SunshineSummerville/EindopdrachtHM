@@ -6,6 +6,7 @@ import novi.basics.springbootDemo.model.ApplicationUser;
 import novi.basics.springbootDemo.model.Reservation;
 import novi.basics.springbootDemo.repository.AppUserRepository;
 import novi.basics.springbootDemo.repository.ReservationRepository;
+import novi.basics.springbootDemo.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,9 @@ import java.util.Optional;
 public class ReservationController {
 
     @Autowired
+    ReservationService reservationService;
+
+    @Autowired // maak een interface klasse in de service laag aan wanneer je een (gele/rode) kringeltje krijgt.
     private ReservationRepository reservationRepository;
 
     @Autowired
@@ -57,7 +61,7 @@ public class ReservationController {
 
         Optional<ApplicationUser> user =
                 appUserRepository.findById(userid);
-        if(user.isPresent()) {
+        if(user.isPresent()) { // check of gebruiker aanwezig is
             newReservation.setCustomer(user.get());
             return reservationRepository.save(newReservation);
         }

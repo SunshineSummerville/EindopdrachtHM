@@ -22,7 +22,35 @@ public class ServiceCategory {
 
     }
 
+    public String getServiceName() {
+        return serviceName;
+    }
 
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
 
+    public String getPrice() {
+        return price;
+    }
 
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getServiceDescription() {
+        return ServiceDescription;
+    }
+
+    public void setServiceDescription(String serviceDescription) {
+        ServiceDescription = serviceDescription;
+    }
+
+    public List<ApplicationUser> getHandymen() {
+        return handymen;
+    }
+
+    public void setHandymen(List<ApplicationUser> handymen) {
+        this.handymen = handymen;
+    }
 }

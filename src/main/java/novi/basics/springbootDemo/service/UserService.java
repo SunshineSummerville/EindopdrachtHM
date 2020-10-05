@@ -12,11 +12,12 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
     @Autowired
     public AppUserRepository appUserRepository;
 
+    @Override //Override: override interface functies
     public List<ApplicationUser> findHandymanByPostalcode(String postalcode) {
         List<ApplicationUser> handyMen = new ArrayList<>();
 
@@ -34,6 +35,7 @@ public class UserService {
         return handyMen;
     }
 
+    @Override
     public List<ApplicationUser> getAllAppUsers() {
         List<ApplicationUser> allAppUsers = appUserRepository.findAll();
         return allAppUsers;
@@ -43,23 +45,29 @@ public class UserService {
         return appUserRepository.findById(userId);
     }
 
+    @Override
+    public ApplicationUser saveNewAppUser(ApplicationUser newAppUser) {
+        String newAppUserEmail = newAppUser.getEmail ();
 
-    public ApplicationUser addAppUser(ApplicationUser newAppUser) {
-        return appUserRepository.save(newAppUser);
+        if(!newAppUserEmail.contains("fuck")) {
+            return appUserRepository.save(newAppUser);
+        }throw new UserNotFoundException(Long.valueOf(1));
     }
 
-
+    @Override
     public String deleteAppUserById (Long userId) {
         Optional<ApplicationUser> user = appUserRepository.findById(userId);
         if(user.isPresent()) {
             appUserRepository.deleteById(userId);
             return "User met id " + user.get().getUserId() + " is verwijderd";
         }
-        throw new UserNotFoundException("Gebruiker bestaat niet. Probeer opnieuw");
+        throw new UserNotFoundException("Gebruiker niet gevonden. Probeer opnieuw");
 
         //return appUserRepository.deleteById(userId);
     }
 
+
+    @Override
     public ApplicationUser updateUserById(Long id, ApplicationUser updatedUser) {
         Optional<ApplicationUser> userFromDb = appUserRepository.findById(id);
 
@@ -75,13 +83,14 @@ public class UserService {
         throw new UserNotFoundException(id);
     }
 
-    private boolean checkIsValidName(String name) {
+    private boolean checkIsValidName(String name) { // om te voorkomen dat er bij "updateUserById" dezelde code wordt geschreven als bij "addAppUserById". Daarom extra methode dat allen door
         if(name.contains("fuck") || name.equalsIgnoreCase("")) {
             return false;
         }
         return true;
     }
 
+    @Override
     public ApplicationUser addTestUserWithReservations() {
         ApplicationUser user = new ApplicationUser();
         user.setFirstName("Sunshine");

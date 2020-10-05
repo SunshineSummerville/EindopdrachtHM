@@ -4,6 +4,7 @@ package novi.basics.springbootDemo.controller;
 import novi.basics.springbootDemo.model.ApplicationUser;
 import novi.basics.springbootDemo.model.Reservation;
 import novi.basics.springbootDemo.repository.AppUserRepository;
+import novi.basics.springbootDemo.service.IUserService;
 import novi.basics.springbootDemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class ApplicationUserController {
 
     @Autowired
-    UserService userService;
+    IUserService userService;
 
     @Autowired
     public AppUserRepository appUserRepository;
@@ -32,7 +33,7 @@ public class ApplicationUserController {
     }
 
     @GetMapping (value = "/api/appuser/{id}")
-    public ApplicationUser getApplicationUserById (@PathVariable Long id) {
+    public ApplicationUser getAppUserById (@PathVariable Long id) {
         Optional<ApplicationUser> appUser = appUserRepository.findById(id);
         if(appUser.isPresent()) {
             return appUser.get();
@@ -41,10 +42,10 @@ public class ApplicationUserController {
     }
 
     @PostMapping (value = "api/appuser")
-    public ApplicationUser saveApplicationUser (@RequestBody ApplicationUser newAppUser) {
+    public ApplicationUser saveNewAppUser (@RequestBody ApplicationUser newAppUser) {
         return appUserRepository.save(newAppUser);
     }
-
+      
     @DeleteMapping(value = "/api/user/{id}")
     public String deleteUser(@PathVariable long id) {
         return userService.deleteAppUserById (id);
